@@ -10,9 +10,9 @@ import streamlit as st
 start = '2010-01-01'
 end = '2019-12-01'
 
-user_input=  st.text_input('Enter Stock Ticker', 'TSLA')
-df = yf.download('TSLA', start=start, end=end)
-
+user_input=  st.text_input('Enter Stock Ticker','TSLA' )
+df = yf.download(user_input, start=start, end=end)
+print(df.head())
 #Describing Data
 st.subheader('Data from 2000- 2019')
 st.write(df.describe())
@@ -104,20 +104,9 @@ x_test_lstm, y_test_lstm = np.array(x_test_lstm), np.array(y_test_lstm)
 #making predictions
 y_predicted_lstm= model_LSTM.predict(x_test_lstm)
 
-scaler.scale_
-
 scale_factor= 1/0.07280492
 y_predicted_lstm = y_predicted_lstm*scale_factor
 y_test_lstm = y_test_lstm*scale_factor
-
-
-fig1=plt.figure(figsize=(12,6))
-st.header('LSTM PREDICTION')
-plt.plot(y_test_lstm, 'b', label= 'Original Price')
-plt.plot(y_predicted_lstm, 'r', label = 'Predicted Price')
-plt.xlabel('Time')
-plt.ylabel('Price')
-st.pyplot(fig1)
 
 def calculate_accuracy(y_predicted_lstm, y_test_lstm):
    
@@ -157,6 +146,31 @@ mse_lstm = mean_squared_error(y_test_lstm, y_predicted_lstm)
 
 
 rmse_lstm = np.sqrt(mse_lstm)
+
+
+
+
+fig1=plt.figure(figsize=(12,6))
+st.header('LSTM PREDICTION')
+plt.plot(y_test_lstm, 'b', label= 'Original Price')
+plt.plot(y_predicted_lstm, 'r', label = 'Predicted Price')
+plt.xlabel('Time')
+plt.ylabel('Price')
+st.pyplot(fig1)
+
+st.subheader('Metrics of LSTM MODEL')
+st.subheader('Mean Squared Error of LSTM:')
+mse_lstm
+st.subheader('Accuracy of LSTM:')
+accuracy_LSTM
+st.subheader('Mean Absolute Error of LSTM:')
+mean_absolute_error_lstm
+st.subheader('Root Mean Squared Error of LSTM:')
+rmse_lstm
+print("Mean Absolute Error:",mean_absolute_error_lstm)
+print("Root Mean Squared Error:", rmse_lstm)
+
+
 
 from sklearn.ensemble import GradientBoostingRegressor
 
@@ -212,14 +226,6 @@ predictions = model_GB.predict(x_test_gb)
 
 y_predicted_gb = model_GB.predict(x_test_gb)
 
-fig3= plt.figure(figsize=(12,6))
-st.subheader('GRADIENT BOOSTING PREDICTION')
-plt.plot(y_test_gb, 'b', label= 'Original Price')
-plt.plot(y_predicted_gb, 'r', label = 'Predicted Price')
-plt.xlabel('Time')
-plt.ylabel('Price')
-st.pyplot(fig3)
-
 def mean_squared_error(y_predicted_gb, y_test_gb):
    
     # Calculate the squared error
@@ -257,15 +263,27 @@ errors = np.abs(y_predicted_gb - y_test_gb)
 # Calculate the mean absolute error (MAE)
 mean_absolute_error_gb = np.mean(errors)
 
-print("Metrics of Gradient Boosting Model")
-print("Mean Squared Error:",mse_gb)
-print("Accuracy:", accuracy_gb)
-print("Mean Absolute Error:",mean_absolute_error_gb)
-print("Root Mean Squared Error:",rmse_gb)
 
-print("Metrics of LSTM MODEL")
-print("Mean Squared Error:", mse_lstm)
-print("Accuracy:", accuracy_LSTM)
-print("Mean Absolute Error:",mean_absolute_error_lstm)
-# print("Root Mean Squared Error:", rmse)
+
+fig3= plt.figure(figsize=(12,6))
+st.subheader('GRADIENT BOOSTING PREDICTION')
+plt.plot(y_test_gb, 'b', label= 'Original Price')
+plt.plot(y_predicted_gb, 'r', label = 'Predicted Price')
+plt.xlabel('Time')
+plt.ylabel('Price')
+st.pyplot(fig3)
+
+st.subheader('Metrics of Gradient Boosting Model')
+st.subheader('Mean Squared Error of GB:')
+mse_gb
+st.subheader('Accuracy of GB:')
+accuracy_gb
+st.subheader('Mean Absolute Error of GB:')
+mean_absolute_error_gb
+st.subheader('Root Mean Squared Error of GB:')
+rmse_gb
+
+
+
+
 
