@@ -431,7 +431,7 @@ x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
 # model_gru = build_model(seq_length)
     
     # Training the model
-model_GRU.fit(x_train, y_train, epochs=50, batch_size=32)
+# model_GRU.fit(x_train, y_train, epochs=50, batch_size=32)
 
 # Making predictions
 GRU_predictions = model_GRU.predict(x_test)
