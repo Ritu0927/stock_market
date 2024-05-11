@@ -320,7 +320,7 @@ model_svm.fit(x_test_svm, y_test_svm)
 svm_predictions = model_svm.predict(x_test_svm)
 
 fig_svm=plt.figure(figsize=(10, 6))
-st.subheader('SVM')
+st.subheader('SVM Prediction')
 plt.plot(y_test_svm, label='Actual')
 plt.plot(svm_predictions, label='Predicted')
 plt.title('Actual vs. Predicted Stock Prices')
@@ -440,7 +440,7 @@ y_test = scaler.inverse_transform(y_test.reshape(-1,1))
 
 # Plotting results
 fig_GRU=plt.figure(figsize=(12, 6))
-st.subheader('GRU')
+st.subheader('GRU Prediction')
 plt.plot(GRU_predictions, label='Predicted')
 plt.plot(y_test, label='True')
 plt.legend()
@@ -488,6 +488,10 @@ st.subheader('Mean Absolute Error of GRU: '+ str(mae_gru) )
 
 st.subheader('Root Mean Squared Error of GRU: '+ str(rmse_gru))
 
+
+
+
+# import seaborn as sns
 
 # Data
 models = ['Gradient Boosting', 'LSTM', 'GRU', 'SVM']
