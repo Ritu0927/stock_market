@@ -489,10 +489,6 @@ st.subheader('Mean Absolute Error of GRU: '+ str(mae_gru) )
 st.subheader('Root Mean Squared Error of GRU: '+ str(rmse_gru))
 
 
-
-
-import seaborn as sns
-
 # Data
 models = ['Gradient Boosting', 'LSTM', 'GRU', 'SVM']
 mse = [0.00627, 14.2066, 0.45844, 0.00335]
