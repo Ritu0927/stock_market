@@ -63,28 +63,6 @@ from keras.layers import Dense, Dropout, LSTM
 from keras.models import Sequential
 model_LSTM = load_model("./lstm_model.h5")
 
-# model_LSTM = Sequential()
-# model_LSTM.add(LSTM(units = 50, activation = 'relu', return_sequences = True, input_shape = (x_train_lstm.shape[1], 1)))
-# model_LSTM.add(Dropout(0.2))
-
-# model_LSTM.add(LSTM(units = 60, activation = 'relu', return_sequences = True ))
-# model_LSTM.add(Dropout(0.3))
-
-# model_LSTM.add(LSTM(units = 80, activation = 'relu', return_sequences = True))
-# model_LSTM.add(Dropout(0.4))
-
-# model_LSTM.add(LSTM(units = 120, activation = 'relu'))
-# model_LSTM.add(Dropout(0.5))
-
-# model_LSTM.add(Dense (units = 1))
-
-# model_LSTM.compile(optimizer= 'adam', loss= 'mean_squared_error')
-# model_LSTM.fit(x_train_lstm, y_train_lstm, epochs = 50)
-
-# data_testing_lstm.head()
-
-# data_training_lstm.tail(100)
-
 past_100_days= data_training_lstm.tail(100)
 
 
@@ -148,8 +126,6 @@ mse_lstm = mean_squared_error(y_test_lstm, y_predicted_lstm)
 rmse_lstm = np.sqrt(mse_lstm)
 
 
-
-
 fig1=plt.figure(figsize=(12,6))
 st.header('LSTM PREDICTION')
 plt.plot(y_test_lstm, 'b', label= 'Original Price')
@@ -159,17 +135,16 @@ plt.ylabel('Price')
 st.pyplot(fig1)
 
 st.subheader('Metrics of LSTM MODEL')
-st.subheader('Mean Squared Error of LSTM: '+ str(mse_lstm))
-st.subheader('Accuracy of LSTM: '+ str(accuracy_LSTM))
-
-st.subheader('Mean Absolute Error of LSTM: '+ str(mean_absolute_error_lstm))
-
-st.subheader('Root Mean Squared Error of LSTM: '+ str(rmse_lstm))
-
+st.subheader('Mean Squared Error of LSTM: ')
+mse_lstm
+st.subheader('Accuracy of LSTM: ')
+accuracy_LSTM
+st.subheader('Mean Absolute Error of LSTM: ')
+mean_absolute_error_lstm
+st.subheader('Root Mean Squared Error of LSTM: ')
+rmse_lstm
 print("Mean Absolute Error:",mean_absolute_error_lstm)
 print("Root Mean Squared Error:", rmse_lstm)
-
-
 
 from sklearn.ensemble import GradientBoostingRegressor
 
@@ -255,14 +230,10 @@ def calculate_accuracy(y_predicted_gb, y_test_gb):
 # Example usage:
 y_predicted = np.array(y_predicted)
 y_test = np.array(y_test)
-
 accuracy_gb = calculate_accuracy(y_predicted_gb, y_test_gb)
-
 errors = np.abs(y_predicted_gb - y_test_gb)
 # Calculate the mean absolute error (MAE)
 mean_absolute_error_gb = np.mean(errors)
-
-
 
 fig3= plt.figure(figsize=(12,6))
 st.subheader('GRADIENT BOOSTING PREDICTION')
@@ -273,14 +244,14 @@ plt.ylabel('Price')
 st.pyplot(fig3)
 
 st.subheader('Metrics of Gradient Boosting Model')
-st.subheader('Mean Squared Error of GB: '+ str(mse_gb))
-
-st.subheader('Accuracy of GB: '+ str(accuracy_gb))
-
-st.subheader('Mean Absolute Error of GB: '+ str(mean_absolute_error_gb))
-
-st.subheader('Root Mean Squared Error of GB: '+ str(rmse_gb))
-
+st.subheader('Mean Squared Error of GB: ')
+mse_gb
+st.subheader('Accuracy of GB: ')
+accuracy_gb
+st.subheader('Mean Absolute Error of GB: ')
+mean_absolute_error_gb
+st.subheader('Root Mean Squared Error of GB: ')
+rmse_gb
 
 # SVR..
 
@@ -370,14 +341,14 @@ rmse_svm = np.sqrt(mse_svm)
 print("Root Mean Squared Error:"+ str(rmse_svm))
 
 st.subheader('Metrics of SVM Model')
-st.subheader('Mean Squared Error of SVM: '+ str(mse_svm))
-
-st.subheader('Accuracy of SVM: '+ str(accuracy_svm))
-
-st.subheader('Mean Absolute Error of SVM: '+ str(mean_absolute_error_svm))
-
-st.subheader('Root Mean Squared Error of SVM: '+ str(rmse_svm))
-
+st.subheader('Mean Squared Error of SVM: ')
+mse_svm
+st.subheader('Accuracy of SVM: ')
+accuracy_svm
+st.subheader('Mean Absolute Error of SVM: ')
+mean_absolute_error_svm
+st.subheader('Root Mean Squared Error of SVM: ')
+rmse_svm
 
 
 # GRU Model
@@ -401,18 +372,6 @@ def create_sequences(data, seq_length):
         y.append(data[i + seq_length])
     return np.array(x), np.array(y)
 
-
-# Building the GRU model
-# def build_model(seq_length):
-#     model = Sequential()
-#     model.add(GRU(units=50, return_sequences=True, input_shape=(seq_length, 1)))
-#     model.add(GRU(units=50))
-#     model.add(Dense(units=1))
-#     model.compile(optimizer='adam', loss='mean_squared_error')
-#     return model
-
-# stock_data = fetch_stock_data('TSLA', '2010-01-01', '2019-12-01')    
-    # Preprocessing data
 scaled_data, scaler = preprocess_data(df)
 seq_length = 30  # Sequence length for training    
     # Creating sequences and labels
@@ -427,11 +386,6 @@ x_test, y_test = x[split:], y[split:]
 x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
 x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
 
- # Building the GRU model
-# model_gru = build_model(seq_length)
-    
-    # Training the model
-# model_GRU.fit(x_train, y_train, epochs=50, batch_size=32)
 
 # Making predictions
 GRU_predictions = model_GRU.predict(x_test)
@@ -480,56 +434,112 @@ print("Mean Squared Error (MSE):", mse_gru)
 print("Root Mean Squared Error (RMSE):", rmse_gru)
 
 st.subheader('Metrics of GRU Model')
-st.subheader('Mean Squared Error of GRU: '+ str(mse_gru) )
+st.subheader('Mean Squared Error of GRU: ' )
+mse_gru
+st.subheader('Accuracy of GRU: ')
+accuracy_gru
+st.subheader('Mean Absolute Error of GRU: ')
+mae_gru
+st.subheader('Root Mean Squared Error of GRU: ')
+rmse_gru
 
-st.subheader('Accuracy of GRU: '+ str(accuracy_gru) )
-
-st.subheader('Mean Absolute Error of GRU: '+ str(mae_gru) )
-
-st.subheader('Root Mean Squared Error of GRU: '+ str(rmse_gru))
-
-
-
-
-# import seaborn as sns
 
 # Data
-models = ['Gradient Boosting', 'LSTM', 'GRU', 'SVM']
-mse = [0.00627, 14.2066, 0.45844, 0.00335]
-accuracy = [0.9117, 0.6262, 0.9758, 0.8882]
-mae = [0.05241, 3.0479, 0.46897, 0.05018]
-rmse = [0.07918, 3.7692, 0.6771, 0.0579]
+chart_data = pd.DataFrame(
+   {
+        "MODELS": ['LSTM','GB', 'SVM', 'GRU'],
+         "Accuracy": [accuracy_LSTM , accuracy_gb, accuracy_svm, accuracy_gru],
+           "MSE": [mse_lstm, mse_gb, mse_svm ,mse_gru], 
+       "RMSE": [rmse_lstm, rmse_gb, rmse_svm, rmse_gru],
+       "MAE":[mean_absolute_error_lstm , mean_absolute_error_gb , mean_absolute_error_svm , mae_gru],
+   }
+)
+#Accuracy
+st.subheader('Accuracy Comparison:')
+st.bar_chart(chart_data, x="MODELS", y="Accuracy")
 
-# Plot
-fig_plot=plt.figure(figsize=(10, 6))
+#MSE
+st.subheader('MSE Comparison:')
+st.bar_chart(chart_data, x="MODELS", y="MSE")
 
-# MSE
-fig_mse=plt.subplot(2, 2, 1)
-# sns.barplot(x=models, y=mse, palette='viridis')
-# plt.title('Mean Squared Error (MSE)')
-st.subheader('Mean Squared Error Comparision:')
-st.bar_chart(np.array(mse))
+#RMSE
+st.subheader('RMSE Comparison:')
+st.bar_chart(chart_data, x="MODELS", y="RMSE")
 
-# Accuracy
-fig_accuracy=plt.subplot(2, 2, 2)
-# sns.barplot(x=models, y=accuracy, palette='viridis')
-# plt.title('Accuracy')
-st.subheader('Accuracy Comparision:')
-st.bar_chart(np.array(accuracy))
+#MAE
+st.subheader('MAE Comparison:')
+st.bar_chart(chart_data, x="MODELS", y="MAE")
 
-# MAE
-fig_mae=plt.subplot(2, 2, 3)
-# sns.barplot(np.array(mae))
-# plt.title('Mean Absolute Error (MAE)')
-st.subheader('Mean Absolute Error Comparision:')
-st.bar_chart(np.array(mae))
+# # Plot
+# fig_plot=plt.figure(figsize=(10, 6))
 
-# RMSE
-fig_rmse=plt.subplot(2, 2, 4)
-# sns.barplot(np.array(mae))
-# plt.title('Root Mean Squared Error (RMSE)')
-st.subheader('Root Mean Squared Error Comparision:')
-st.bar_chart(np.array(rmse))
+# #MSE
+# fig_mse, ax_mse = plt.subplots()
+# st.subheader('Mean Squared Error Comparison:')
+# ax_mse.bar(models, mse)
+# # Adding labels to x-axis indexes
+# ax_mse.set_xticks(range(len(models)))
+# ax_mse.set_xticklabels(models)
+# # Display the plot
+# st.pyplot(fig_mse)
+
+# #RMSE
+# fig_rmse, ax_rmse = plt.subplots()
+# st.subheader('Root Mean Squared Error Comparison:')
+# ax_rmse.bar(models, rmse)
+# # Adding labels to x-axis indexes
+# ax_rmse.set_xticks(range(len(models)))
+# ax_rmse.set_xticklabels(models)
+# # Display the plot
+# st.pyplot(fig_rmse)
+
+# #MAE
+# #MSE
+# fig_mae, ax_mae = plt.subplots()
+# st.subheader('Mean Absolute Error Comparison:')
+# ax_mae.bar(models, mae)
+# # Adding labels to x-axis indexes
+# ax_mae.set_xticks(range(len(models)))
+# ax_mae.set_xticklabels(models)
+# # Display the plot
+# st.pyplot(fig_mae)
+
+# #ACCURACY
+# #MSE
+# fig_accuracy, ax_accuracy = plt.subplots()
+# st.subheader('Accuracy Comparison:')
+# # st.bar_chart(np.array(accuracy))
+# ax_accuracy.bar(models, accuracy)
+# # Adding labels to x-axis indexes
+# ax_accuracy.set_xticks(range(len(models)))
+# ax_accuracy.set_xticklabels(models)
+# # Display the plot
+# st.pyplot(fig_accuracy)
+
+# chart_data = pd.DataFrame(
+#    {
+#        "col1": [accuracy_LSTM , accuracy_gb, accuracy_svm, accuracy_gru],
+#        "col2": ['LSTM','Gradient Boosting', 'SVM', 'GRU'],
+       
+#    }
+# )
+
+
+
+# # Accuracy
+# fig_accuracy=plt.subplot(2, 2, 2)
+# st.subheader('Accuracy Comparision:')
+# st.bar_chart(np.array(accuracy))
+
+# # MAE
+# fig_mae=plt.subplot(2, 2, 3)
+# st.subheader('Mean Absolute Error Comparision:')
+# st.bar_chart(np.array(mae))
+
+# # RMSE
+# fig_rmse=plt.subplot(2, 2, 4)
+# st.subheader('Root Mean Squared Error Comparision:')
+# st.bar_chart(np.array(rmse))
 
 
 
